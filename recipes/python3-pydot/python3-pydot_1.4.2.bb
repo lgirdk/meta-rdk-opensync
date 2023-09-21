@@ -8,6 +8,6 @@ SRC_URI[sha256sum] = "248081a39bcb56784deb018977e428605c1c758f10897a339fce1dd728
 
 inherit pypi setuptools3
 
-RDEPENDS:${PN} = "graphviz python3-pyparsing"
+RDEPENDS_${PN} = "graphviz python3-pyparsing"
 
 BBCLASSEXTEND = "native"
