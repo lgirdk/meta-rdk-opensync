@@ -12,7 +12,7 @@ SRC_URI = "https://github.com/${BPN}/${BPN}/releases/download/${PV}/${BP}.tar.gz
 SRC_URI[sha256sum] = "20f74769e40144e4d251d2977cc4c40d2d428a2bec8c1b8709cd07315454baef"
 
 DEPENDS += "libmnl openssl"
-RDEPENDS_${PN} += "libmnl openssl"
+RDEPENDS:${PN} += "libmnl openssl"
 
 inherit autotools
 

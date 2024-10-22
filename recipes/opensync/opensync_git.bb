@@ -7,13 +7,13 @@ PR = "r0"
 inherit python3native
 inherit systemd
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 DEPENDS = "libev libgpg-error wireless-tools openssl jansson libtool mosquitto openvswitch protobuf-c protobuf-c-native libpcap openvswitch-native hal-wifi halinterface mesh-agent python3-kconfiglib-native coreutils-native python3-jinja2-native python3-markupsafe-native libmxml libnl curl libmnl python3-pydot-native rdk-logger"
 
-DEPENDS_remove = "${@bb.utils.contains('DISTRO_FEATURES', 'extender', 'mesh-agent ', '', d)}"
+DEPENDS:remove = "${@bb.utils.contains('DISTRO_FEATURES', 'extender', 'mesh-agent ', '', d)}"
 
-RDEPENDS_${PN} += "openvswitch libnl"
+RDEPENDS:${PN} += "openvswitch libnl"
 
 inherit python3native
 
@@ -69,7 +69,7 @@ EXTRA_OEMAKE += "PLATFORM=rdk"
 EXTRA_OEMAKE += "${PLUME_MAKE_ARGS}"
 EXTRA_OEMAKE += "OPENSYNC_SERVICE_PROVIDER_SUFFIX=${OPENSYNC_SERVICE_PROVIDER_SUFFIX}"
 
-do_compile_prepend() {
+do_compile:prepend() {
     echo === pwd ===
     pwd
     echo === bb var ===
@@ -81,20 +81,20 @@ do_compile_prepend() {
     echo === make ===
 }
 
-do_install_append() {
+do_install:append() {
     bbnote make ${EXTRA_OEMAKE} INSTALL_DIR="${D}" install
     make ${EXTRA_OEMAKE} INSTALL_DIR=${D} install || bbfatal "make install failed"
 }
 
-SYSTEMD_SERVICE_${PN} = "opensync.service"
+SYSTEMD_SERVICE:${PN} = "opensync.service"
 SYSTEMD_AUTO_ENABLE = "${@bb.utils.contains('DISTRO_FEATURES', 'extender', 'enable', 'disable', d)}"
 
 inherit cml1
-KCONFIG_CONFIG_COMMAND_append = "${EXTRA_OEMAKE} menuconfig"
+KCONFIG_CONFIG_COMMAND:append = "${EXTRA_OEMAKE} menuconfig"
 
 # OpenSync doesn't support 'oldconfig' target, so override
 # here the cml1's "do_configure" and don't call 'oldconfig'
-cml1_do_configure_prepend() {
+cml1_do_configure:prepend() {
     set -e
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     return 0
@@ -109,7 +109,7 @@ do_diffconfig() {
     bbplain "Fragment file generated $(readlink -f fragment.cfg)"
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     ${sysconfdir}/udhcpc.user \
     ${prefix}/sbin/* \
     ${prefix}/${PN}/* \
@@ -117,7 +117,7 @@ FILES_${PN} = " \
     ${sysconfdir}/systemd/* \
 "
 
-FILES_${PN}-extras = " \
+FILES:${PN}-extras = " \
     ${prefix}/${PN}/scripts/start.d/* \
     ${prefix}/${PN}/scripts/stop.d/* \
     ${prefix}/${PN}/scripts/opensync_functions.sh \
@@ -128,13 +128,13 @@ FILES_${PN}-extras = " \
     ${prefix}/${PN}/bin/stop.sh \
 "
 
-FILES_${PN}-dbg = " \
+FILES:${PN}-dbg = " \
     ${prefix}/src/debug \
     ${prefix}/${PN}/**/.debug \
     ${prefix}/opensync/**/**/.debug \
 "
 
-FILES_${PN}-extra-tools = " \
+FILES:${PN}-extra-tools = " \
     ${prefix}/${PN}/tools/wifi_hal_test \
     ${prefix}/${PN}/tools/band_steering_test \
     ${prefix}/${PN}/tools/wifi_hal_tool \
