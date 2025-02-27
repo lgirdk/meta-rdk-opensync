@@ -2,7 +2,7 @@ SUMMARY = "OpenSync"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=df3f42ef5870da613e959ac4ecaa1cb8"
 
-PR = "r0"
+PV = "4.4.0"
 
 inherit python3native
 inherit systemd
@@ -23,7 +23,7 @@ SRCREV_vendor ?= "${AUTOREV}"
 SRCREV_service-provider ?= "${AUTOREV}"
 
 OPENSYNC_DEFAULT_PROTOCOL ?= "https"
-OPENSYNC_DEFAULT_BRANCH ?= "osync_4.4.0"
+OPENSYNC_DEFAULT_BRANCH ?= "osync_${PV}"
 
 OPENSYNC_CORE_REPO_PATH ?= "git://git@github.com/plume-design/opensync.git"
 OPENSYNC_CORE_REPO_PROTOCOL ?= "${OPENSYNC_DEFAULT_PROTOCOL}"
