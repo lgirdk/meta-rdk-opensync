@@ -4,11 +4,6 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=df3f42ef5870da613e959ac4ecaa1cb8"
 
 PV = "4.4.0"
 
-inherit python3native
-inherit systemd
-
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-
 DEPENDS = "libev libgpg-error wireless-tools openssl jansson libtool mosquitto openvswitch protobuf-c protobuf-c-native libpcap openvswitch-native hal-wifi halinterface mesh-agent python3-kconfiglib-native coreutils-native python3-jinja2-native python3-markupsafe-native libmxml libnl curl libmnl python3-pydot-native rdk-logger"
 
 DEPENDS:remove = "${@bb.utils.contains('DISTRO_FEATURES', 'extender', 'mesh-agent ', '', d)}"
@@ -16,6 +11,7 @@ DEPENDS:remove = "${@bb.utils.contains('DISTRO_FEATURES', 'extender', 'mesh-agen
 RDEPENDS:${PN} += "openvswitch libnl"
 
 inherit python3native
+inherit systemd
 
 SRCREV_core ?= "${AUTOREV}"
 SRCREV_platform ?= "${AUTOREV}"
